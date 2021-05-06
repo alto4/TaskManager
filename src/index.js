@@ -4,8 +4,11 @@ import { Project } from "./Project";
 
 let projects = [];
 let allTasks = [];
+
 let projectsContainer = document.querySelector("#projects");
 let tasksContainer = document.querySelector("#tasks");
+let addProjectButton = document.querySelector("#project-input-form button");
+let addTaskButton = document.querySelector("#task-input-form button");
 
 // Sample project creation
 let testProject = new Project(
@@ -26,7 +29,7 @@ let task1 = new Task(
 );
 
 projects.push(testProject);
-testProject.tasks.push(task1);
+testProject.addTask(task1);
 task1.toggleComplete();
 console.log(projects);
 
@@ -60,3 +63,28 @@ projects.map((project) => {
 });
 
 console.log(allTasks);
+
+// addProject
+addProjectButton.addEventListener("click", function (e) {
+  e.preventDefault();
+  let title = document.querySelector("#project-input-form input[name=title]")
+    .value;
+  let description = document.querySelector(
+    "#project-input-form input[name=description]"
+  ).value;
+  let dueDate = document.querySelector(
+    "#project-input-form input[name=dueDate]"
+  ).value;
+  let tasks = document.querySelector("#project-input-form input[name=tasks]")
+    .value;
+
+  let newProject = new Project(title, description, dueDate, tasks);
+  projects.push(newProject);
+  console.log(projects);
+});
+
+//addTask
+addTaskButton.addEventListener("click", function (e) {
+  e.preventDefault();
+  console.log("add task button clicked.");
+});

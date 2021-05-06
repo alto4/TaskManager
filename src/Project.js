@@ -6,6 +6,10 @@ class Project {
     this.dueDate = dueDate;
     this.tasks = tasks;
   }
+
+  addTask(task) {
+    this.tasks.push(task);
+  }
 }
 
 module.exports = { Project };
