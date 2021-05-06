@@ -36,34 +36,45 @@ console.log(projects);
 // displayProjects
 function displayProjects() {
   let index = 1;
+
+  projectsContainer.innerHTML = "";
+
   projects.forEach((project) => {
     let projectDisplay = `
     <div className="project-card">
       <h3>Project #${index}: ${project.title}</h3>
       <p>${project.description}</p>
       <strong>Task List</strong>
-      <ul>
-        ${project.tasks.map((task) => {
+      <ul>`;
+
+    project.tasks.length > 0
+      ? (projectDisplay += `${project.tasks.map((task) => {
           return `<li><strong>${task.title}</strong> (<small>${task.dueDate}</small>)</li>`;
-        })}
-      </ul>
+        })}`)
+      : (projectDisplay += "<li><strong>No tasks to display.</strong></li>");
+
+    projectDisplay += `</ul>
     </div>
-  `;
+    `;
+
     projectsContainer.innerHTML += projectDisplay;
+    index++;
   });
 }
 
 displayProjects();
 
 // displayAllTasks
-projects.map((project) => {
-  project.tasks.map((task) => {
-    allTasks.push(task.title);
+function displayAllTasks() {
+  allTasks = [];
+  projects.map((project) => {
+    project.tasks.map((task) => {
+      allTasks.push(task.title);
+    });
   });
-});
 
-console.log(allTasks);
-
+  console.log("ALL TASKS UPDATED:\n" + allTasks.join(" | "));
+}
 // addProject
 addProjectButton.addEventListener("click", function (e) {
   e.preventDefault();
@@ -78,13 +89,43 @@ addProjectButton.addEventListener("click", function (e) {
   let tasks = document.querySelector("#project-input-form input[name=tasks]")
     .value;
 
-  let newProject = new Project(title, description, dueDate, tasks);
+  let newProject = new Project(title, description, dueDate, []);
   projects.push(newProject);
+  displayProjects();
   console.log(projects);
 });
 
 //addTask
 addTaskButton.addEventListener("click", function (e) {
   e.preventDefault();
-  console.log("add task button clicked.");
+
+  let title = document.querySelector("#task-input-form input[name=title]")
+    .value;
+  let description = document.querySelector(
+    "#task-input-form input[name=description]"
+  ).value;
+  let dueDate = document.querySelector("#task-input-form input[name=dueDate]")
+    .value;
+  let checklist = document.querySelector(
+    "#task-input-form input[name=checklist]"
+  ).value;
+  let notes = document.querySelector("#task-input-form input[name=notes]")
+    .value;
+  let priority = document.querySelector("#task-input-form input[name=priority]")
+    .value;
+
+  let newTask = new Task(
+    title,
+    description,
+    dueDate,
+    priority,
+    notes,
+    [],
+    false
+  );
+
+  // TODO -> task should be assigned to a project using dropdown
+  projects[0].addTask(newTask);
+  displayProjects();
+  displayAllTasks();
 });
