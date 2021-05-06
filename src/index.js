@@ -2,7 +2,10 @@
 import { Task } from "./Task";
 import { Project } from "./Project";
 
-let tasks = document.querySelector("#tasks");
+let projects = [];
+let allTasks = [];
+let projectsContainer = document.querySelector("#projects");
+let tasksContainer = document.querySelector("#tasks");
 
 // Sample project creation
 let testProject = new Project(
@@ -22,5 +25,38 @@ let task1 = new Task(
   []
 );
 
+projects.push(testProject);
 testProject.tasks.push(task1);
-console.log(testProject);
+task1.toggleComplete();
+console.log(projects);
+
+// displayProjects
+function displayProjects() {
+  let index = 1;
+  projects.forEach((project) => {
+    let projectDisplay = `
+    <div className="project-card">
+      <h3>Project #${index}: ${project.title}</h3>
+      <p>${project.description}</p>
+      <strong>Task List</strong>
+      <ul>
+        ${project.tasks.map((task) => {
+          return `<li><strong>${task.title}</strong> (<small>${task.dueDate}</small>)</li>`;
+        })}
+      </ul>
+    </div>
+  `;
+    projectsContainer.innerHTML += projectDisplay;
+  });
+}
+
+displayProjects();
+
+// displayAllTasks
+projects.map((project) => {
+  project.tasks.map((task) => {
+    allTasks.push(task.title);
+  });
+});
+
+console.log(allTasks);

@@ -17,6 +17,10 @@ class Task {
     this.checklist = checklist;
     this.complete = complete;
   }
+
+  toggleComplete() {
+    this.complete = !this.complete;
+  }
 }
 
 module.exports = { Task };
