@@ -92,7 +92,7 @@ addProjectButton.addEventListener("click", function (e) {
   let newProject = new Project(title, description, dueDate, []);
   projects.push(newProject);
   displayProjects();
-  console.log(projects);
+  generateDropdown(projects);
 });
 
 //addTask
@@ -101,6 +101,9 @@ addTaskButton.addEventListener("click", function (e) {
 
   let title = document.querySelector("#task-input-form input[name=title]")
     .value;
+  let projectId = document.querySelector(
+    "#task-input-form select[name=projectId]"
+  ).value;
   let description = document.querySelector(
     "#task-input-form input[name=description]"
   ).value;
@@ -124,8 +127,35 @@ addTaskButton.addEventListener("click", function (e) {
     false
   );
 
+  console.log("PROJECTS ID:" + projectId);
   // TODO -> task should be assigned to a project using dropdown
-  projects[0].addTask(newTask);
+  projects[projectId].addTask(newTask);
   displayProjects();
   displayAllTasks();
 });
+
+generateDropdown(projects);
+
+// generateDropdown - creates dropdown based on existing projects to associate a task with
+function generateDropdown(options) {
+  let projectsDropdown = document.querySelector("select[name=projectId]");
+  let index = 0;
+
+  console.log("Dropdown to be create on " + projectsDropdown);
+
+  // Clear current options
+  projectsDropdown.innerHTML = "";
+
+  options.forEach((option) => {
+    console.log(option.title);
+    // let dropdownOption = `<option value="${option.title}" data-id="${index}">${option.title}<option>`;
+    let dropdownOption = document.createElement("option");
+    dropdownOption.setAttribute("data-id", index);
+    dropdownOption.value = index;
+    dropdownOption.innerText = option.title;
+    //projectsDropdown.innerHTML += dropdownOption;
+    console.log(dropdownOption);
+    projectsDropdown.appendChild(dropdownOption);
+    index++;
+  });
+}
