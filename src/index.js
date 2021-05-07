@@ -47,9 +47,11 @@ function displayProjects() {
       <ul>`;
 
     project.tasks.length > 0
-      ? (projectDisplay += `${project.tasks.map((task, taskIndex) => {
-          return `<li><strong>${task.title}</strong><button class="btn btn-delete" data-project="${projectIndex}" data-id="${taskIndex}">Delete</button> <button class="btn btn-edit" data-project="${projectIndex}" data-id="${taskIndex}">Edit</button>(<small>${task.dueDate}</small>)</li>`;
-        })}`)
+      ? (projectDisplay += `${project.tasks
+          .map((task, taskIndex) => {
+            return `<li><strong>${task.title}</strong><button class="btn btn-delete" data-project="${projectIndex}" data-id="${taskIndex}">Delete</button> <button class="btn btn-edit" data-project="${projectIndex}" data-id="${taskIndex}">Edit</button>(<small>${task.dueDate}</small>)</li>`;
+          })
+          .join("")}`)
       : (projectDisplay += "<li><strong>No tasks to display.</strong></li>");
 
     projectDisplay += `</ul>
@@ -253,3 +255,14 @@ function clearForms() {
     menu.selectedIndex = 0;
   });
 }
+
+document.querySelector("#task-input-form").style.display = "none";
+document.querySelector("#project-input-form").style.display = "none";
+
+document.querySelector(".add-tasks").addEventListener("click", () => {
+  document.querySelector("#task-input-form").style.display = "block";
+});
+
+document.querySelector(".add-projects").addEventListener("click", () => {
+  document.querySelector("#project-input-form").style.display = "block";
+});

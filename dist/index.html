@@ -9,69 +9,73 @@
 </head>
 <body>
   <h1>Task Manager</h1>
-
-  <!-- Tasks container -->
-  <div id="tasks">
-    <h2>Tasks</h2>  
+  <div class="container">    
+    <div id="input-container">
+      <!-- Tasks container -->
+      <div id="tasks-container">
+        <h2 class="add-tasks">Add Tasks</h2>  
+      
+      <form id="task-input-form">
+        <label>Task Title:
+          <input type="text" name="title">
+        </label>
+        <br />
+        <label>Project ID:
+          <select name="projectId">
+            <option value="test">Test</option>
+          </select>
+        
+        </label>
+        <br />
+        <label>Description:
+          <input type="text" name="description">
+        </label>
+        <br />
+        <label>Due Date:
+          <input type="text" name="dueDate">
+        </label>
+        <br />
+        <label>Checklist:
+          <input type="text" name="checklist">
+        </label>
+        <br />
+        <label>Notes:
+          <input type="text" name="notes">
+        </label>
+        <br />
+        <label>Priority:
+          <input type="text" name="priority">
+        </label>
+        <br />
+        <button class="btn btn-add-task">Add Task</button>
+      </form>
+    </div>
+      <!-- Projects container -->
+      <div id="projects-container">
+        <h2 class="add-projects">Add Projects</h2>
+        <form id="project-input-form">
+          <label>Project Title:
+            <input type="text" name="title">
+          </label>
+          <br />
+          <label>Description:
+            <input type="text" name="description">
+          </label>
+          <br />
+          <label>Due Date:
+            <input type="text" name="dueDate">
+          </label>
+          <br />
+          <label>Project Tasks:
+            <input type="text" name="tasks">
+          </label>
+          <br />
+          <button class="btn btn-add-project">Add Project</button>
+        </form>
+      </div>
+    </div>
+    <div id="projects"></div>
   </div>
-  <form id="task-input-form">
-    <label>Task Title:
-      <input type="text" name="title">
-    </label>
-    <br />
-    <label>Project ID:
-      <select name="projectId">
-        <option value="test">Test</option>
-      </select>
-    
-    </label>
-    <br />
-    <label>Description:
-      <input type="text" name="description">
-    </label>
-    <br />
-    <label>Due Date:
-      <input type="text" name="dueDate">
-    </label>
-    <br />
-    <label>Checklist:
-      <input type="text" name="checklist">
-    </label>
-    <br />
-    <label>Notes:
-      <input type="text" name="notes">
-    </label>
-    <br />
-    <label>Priority:
-      <input type="text" name="priority">
-    </label>
-    <br />
-    <button class="btn btn-add-task">Add Task</button>
-  </form>
-  
-  <!-- Projects container -->
-  <h2>Projects</h2>
-  <div id="projects"></div>
-  <form id="project-input-form">
-    <label>Project Title:
-      <input type="text" name="title">
-    </label>
-    <br />
-    <label>Description:
-      <input type="text" name="description">
-    </label>
-    <br />
-    <label>Due Date:
-      <input type="text" name="dueDate">
-    </label>
-    <br />
-    <label>Project Tasks:
-      <input type="text" name="tasks">
-    </label>
-    <br />
-    <button class="btn btn-add-project">Add Project</button>
-  </form>
-  
   <script src="main.js"></script>
 </body>
 </html>

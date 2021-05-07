@@ -7,13 +7,14 @@
 }
 
 /* Projects Styles */
+.container {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+}
+
 #projects {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
 
-/* Task Styles */
-#tasks {  
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
+
