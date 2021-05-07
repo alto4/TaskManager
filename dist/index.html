@@ -5,34 +5,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TaskManager</title>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
   <h1>Task Manager</h1>
 
-  <!-- Projects container -->
-  <h2>Projects</h2>
-  <div id="projects"></div>
-  <form id="project-input-form">
-    <label>Project Title:
-      <input type="text" name="title">
-    </label>
-    <br />
-    <label>Description:
-      <input type="text" name="description">
-    </label>
-    <br />
-    <label>Due Date:
-      <input type="text" name="dueDate">
-    </label>
-    <br />
-    <label>Project Tasks:
-      <input type="text" name="tasks">
-    </label>
-    <br />
-    <button class="btn btn-add-project">Add Project</button>
-  </form>
-  
-  
   <!-- Tasks container -->
   <div id="tasks">
     <h2>Tasks</h2>  
@@ -71,6 +48,32 @@
     <br />
     <button class="btn btn-add-task">Add Task</button>
   </form>
+  
+  <!-- Projects container -->
+  <h2>Projects</h2>
+  <div id="projects"></div>
+  <form id="project-input-form">
+    <label>Project Title:
+      <input type="text" name="title">
+    </label>
+    <br />
+    <label>Description:
+      <input type="text" name="description">
+    </label>
+    <br />
+    <label>Due Date:
+      <input type="text" name="dueDate">
+    </label>
+    <br />
+    <label>Project Tasks:
+      <input type="text" name="tasks">
+    </label>
+    <br />
+    <button class="btn btn-add-project">Add Project</button>
+  </form>
+  
+  
+  
   <script src="main.js"></script>
 </body>
 </html>

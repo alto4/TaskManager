@@ -48,8 +48,8 @@ function displayProjects() {
       <ul>`;
 
     project.tasks.length > 0
-      ? (projectDisplay += `${project.tasks.map((task) => {
-          return `<li><strong>${task.title}</strong> (<small>${task.dueDate}</small>)</li>`;
+      ? (projectDisplay += `${project.tasks.map((task, index) => {
+          return `<li><strong>${task.title}</strong><button class="btn btn-delete" data-id="${index}">Delete</button> (<small>${task.dueDate}</small>)</li>`;
         })}`)
       : (projectDisplay += "<li><strong>No tasks to display.</strong></li>");
 
@@ -60,10 +60,11 @@ function displayProjects() {
     projectsContainer.innerHTML += projectDisplay;
     index++;
   });
+
+  addTaskEventListeners();
 }
 
 displayProjects();
-
 // displayAllTasks
 function displayAllTasks() {
   allTasks = [];
@@ -132,6 +133,8 @@ addTaskButton.addEventListener("click", function (e) {
   projects[projectId].addTask(newTask);
   displayProjects();
   displayAllTasks();
+
+  addTaskEventListeners();
 });
 
 generateDropdown(projects);
@@ -157,5 +160,18 @@ function generateDropdown(options) {
     console.log(dropdownOption);
     projectsDropdown.appendChild(dropdownOption);
     index++;
+  });
+}
+
+function addTaskEventListeners() {
+  let deleteButtons = [...document.querySelectorAll(`.btn-delete`)];
+
+  deleteButtons.forEach((button, index) => {
+    button.addEventListener("click", function () {
+      alert("DELETE ID OF " + index);
+      projects.splice(index, 1);
+      displayAllTasks();
+      displayProjects();
+    });
   });
 }
