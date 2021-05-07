@@ -98,9 +98,12 @@ addProjectButton.addEventListener("click", function (e) {
 });
 
 //addTask
-addTaskButton.addEventListener("click", function (e) {
+addTaskButton.addEventListener("click", function addTaskEvents(e) {
   e.preventDefault();
+  addNewTask();
+});
 
+function addNewTask() {
   let title = document.querySelector("#task-input-form input[name=title]")
     .value;
   let projectId = document.querySelector(
@@ -135,7 +138,7 @@ addTaskButton.addEventListener("click", function (e) {
   displayAllTasks();
   displayProjects();
   addTaskEventListeners();
-});
+}
 
 generateDropdown(projects);
 
@@ -175,13 +178,12 @@ function addTaskEventListeners() {
     button.addEventListener("click", function (e) {
       e.preventDefault();
 
-      document.querySelector(".btn-add-task").innerText = "Edit Task";
+      // Update add button to edit
+      let editButton = document.querySelector(".btn-add-task");
+      editButton.innerText = "Edit Task";
+
       let projectIndex = e.target.getAttribute("data-project");
       let taskIndex = e.target.getAttribute("data-id");
-
-      console.log(
-        "TO FILL WITH: " + projects[projectIndex].tasks[taskIndex].title
-      );
 
       document.querySelector(
         "#task-input-form input[name=title]"
@@ -205,6 +207,21 @@ function addTaskEventListeners() {
       let priority = (document.querySelector(
         "#task-input-form input[name=priority]"
       ).value = projects[projectIndex].tasks[taskIndex].priority.toString());
+
+      editButton.addEventListener("click", function addEditEvents(e) {
+        e.preventDefault();
+        projects[projectIndex].tasks[taskIndex].title = document.querySelector(
+          "#task-input-form input[name=title]"
+        ).value;
+        console.log(
+          "PROCESS EDIT NOW!" + projects[projectIndex].tasks[taskIndex].title
+        );
+        projects[projectIndex].tasks[taskIndex].title = document.querySelector(
+          "#task-input-form input[name=title]"
+        ).value;
+        editButton.removeEventListener("click", addEditEvents);
+        displayProjects();
+      });
     });
   });
 }
@@ -223,9 +240,7 @@ function addProjectEventListeners() {
       generateDropdown(projects);
     });
   });
-  //<button class="btn btn-delete-project" data-project-id="${projectIndex}">Delete</button>
 }
-
 function clearForms() {
   let inputs = [...document.querySelectorAll("input")];
   let dropdownMenus = [...document.querySelectorAll("select")];
