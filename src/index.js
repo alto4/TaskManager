@@ -31,7 +31,6 @@ let task1 = new Task(
 projects.push(testProject);
 testProject.addTask(task1);
 task1.toggleComplete();
-console.log(projects);
 
 // displayProjects
 function displayProjects() {
@@ -62,9 +61,11 @@ function displayProjects() {
 
   addTaskEventListeners();
   addProjectEventListeners();
+  clearForms();
 }
 
 displayProjects();
+
 // displayAllTasks
 function displayAllTasks() {
   allTasks = [];
@@ -73,8 +74,6 @@ function displayAllTasks() {
       allTasks.push(task.title);
     });
   });
-
-  console.log("ALL TASKS UPDATED:\n" + allTasks.join(" | "));
 }
 // addProject
 addProjectButton.addEventListener("click", function (e) {
@@ -92,9 +91,9 @@ addProjectButton.addEventListener("click", function (e) {
 
   let newProject = new Project(title, description, dueDate, []);
   projects.push(newProject);
-  displayProjects();
 
   // addProjectEventListeners();
+  displayProjects();
   generateDropdown(projects);
 });
 
@@ -130,8 +129,7 @@ addTaskButton.addEventListener("click", function (e) {
     false
   );
 
-  console.log("PROJECTS ID:" + projectId);
-  // TODO -> task should be assigned to a project using dropdown
+  // Add task to corresponding list
   projects[projectId].addTask(newTask);
 
   displayAllTasks();
@@ -146,20 +144,14 @@ function generateDropdown(options) {
   let projectsDropdown = document.querySelector("select[name=projectId]");
   let index = 0;
 
-  console.log("Dropdown to be create on " + projectsDropdown);
-
   // Clear current options
   projectsDropdown.innerHTML = "";
 
   options.forEach((option) => {
-    console.log(option.title);
-    // let dropdownOption = `<option value="${option.title}" data-id="${index}">${option.title}<option>`;
     let dropdownOption = document.createElement("option");
     dropdownOption.setAttribute("data-id", index);
     dropdownOption.value = index;
     dropdownOption.innerText = option.title;
-    //projectsDropdown.innerHTML += dropdownOption;
-    console.log(dropdownOption);
     projectsDropdown.appendChild(dropdownOption);
     index++;
   });
@@ -172,8 +164,6 @@ function addTaskEventListeners() {
     button.addEventListener("click", function (e) {
       let projectIndex = e.target.getAttribute("data-project");
       let taskIndex = e.target.getAttribute("data-id");
-      console.log(allTasks);
-      console.log("PROJECT ID: " + projectIndex + " TASK INDEX " + taskIndex);
       projects[projectIndex].removeTask(taskIndex);
       displayAllTasks();
       displayProjects();
@@ -188,14 +178,25 @@ function addProjectEventListeners() {
 
   deleteProjectsButtons.forEach((button, index) => {
     button.addEventListener("click", function (e) {
-      alert("ACKNOWLEDGED");
       let projectIndex = e.target.getAttribute("data-project-id");
-      console.log(allTasks);
-      console.log("PROJECT ID: " + projectIndex);
       projects.splice(projectIndex, 1);
       displayAllTasks();
       displayProjects();
+      generateDropdown(projects);
     });
   });
   //<button class="btn btn-delete-project" data-project-id="${projectIndex}">Delete</button>
+}
+
+function clearForms() {
+  let inputs = [...document.querySelectorAll("input")];
+  let dropdownMenus = [...document.querySelectorAll("select")];
+
+  inputs.forEach((input) => {
+    input.value = "";
+  });
+
+  dropdownMenus.forEach((menu) => {
+    menu.selectedIndex = 0;
+  });
 }
