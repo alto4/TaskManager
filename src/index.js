@@ -35,21 +35,21 @@ console.log(projects);
 
 // displayProjects
 function displayProjects() {
-  let index = 1;
-
   projectsContainer.innerHTML = "";
 
-  projects.forEach((project) => {
+  projects.forEach((project, projectIndex) => {
     let projectDisplay = `
     <div className="project-card">
-      <h3>Project #${index}: ${project.title}</h3>
+      <h3>Project #${projectIndex + 1}: ${
+      project.title
+    }</h3><button class="btn btn-delete-project" data-project-id="${projectIndex}">Delete</button>
       <p>${project.description}</p>
       <strong>Task List</strong>
       <ul>`;
 
     project.tasks.length > 0
-      ? (projectDisplay += `${project.tasks.map((task, index) => {
-          return `<li><strong>${task.title}</strong><button class="btn btn-delete" data-id="${index}">Delete</button> (<small>${task.dueDate}</small>)</li>`;
+      ? (projectDisplay += `${project.tasks.map((task, taskIndex) => {
+          return `<li><strong>${task.title}</strong><button class="btn btn-delete" data-project="${projectIndex}" data-id="${taskIndex}">Delete</button> (<small>${task.dueDate}</small>)</li>`;
         })}`)
       : (projectDisplay += "<li><strong>No tasks to display.</strong></li>");
 
@@ -58,10 +58,10 @@ function displayProjects() {
     `;
 
     projectsContainer.innerHTML += projectDisplay;
-    index++;
   });
 
   addTaskEventListeners();
+  addProjectEventListeners();
 }
 
 displayProjects();
@@ -93,6 +93,8 @@ addProjectButton.addEventListener("click", function (e) {
   let newProject = new Project(title, description, dueDate, []);
   projects.push(newProject);
   displayProjects();
+
+  // addProjectEventListeners();
   generateDropdown(projects);
 });
 
@@ -131,9 +133,9 @@ addTaskButton.addEventListener("click", function (e) {
   console.log("PROJECTS ID:" + projectId);
   // TODO -> task should be assigned to a project using dropdown
   projects[projectId].addTask(newTask);
-  displayProjects();
-  displayAllTasks();
 
+  displayAllTasks();
+  displayProjects();
   addTaskEventListeners();
 });
 
@@ -164,14 +166,36 @@ function generateDropdown(options) {
 }
 
 function addTaskEventListeners() {
-  let deleteButtons = [...document.querySelectorAll(`.btn-delete`)];
+  let deleteTaskButtons = [...document.querySelectorAll(`.btn-delete`)];
 
-  deleteButtons.forEach((button, index) => {
-    button.addEventListener("click", function () {
-      alert("DELETE ID OF " + index);
-      projects.splice(index, 1);
+  deleteTaskButtons.forEach((button, index) => {
+    button.addEventListener("click", function (e) {
+      let projectIndex = e.target.getAttribute("data-project");
+      let taskIndex = e.target.getAttribute("data-id");
+      console.log(allTasks);
+      console.log("PROJECT ID: " + projectIndex + " TASK INDEX " + taskIndex);
+      projects[projectIndex].removeTask(taskIndex);
       displayAllTasks();
       displayProjects();
     });
   });
+}
+
+function addProjectEventListeners() {
+  let deleteProjectsButtons = [
+    ...document.querySelectorAll(".btn-delete-project"),
+  ];
+
+  deleteProjectsButtons.forEach((button, index) => {
+    button.addEventListener("click", function (e) {
+      alert("ACKNOWLEDGED");
+      let projectIndex = e.target.getAttribute("data-project-id");
+      console.log(allTasks);
+      console.log("PROJECT ID: " + projectIndex);
+      projects.splice(projectIndex, 1);
+      displayAllTasks();
+      displayProjects();
+    });
+  });
+  //<button class="btn btn-delete-project" data-project-id="${projectIndex}">Delete</button>
 }
