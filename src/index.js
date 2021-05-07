@@ -48,7 +48,7 @@ function displayProjects() {
 
     project.tasks.length > 0
       ? (projectDisplay += `${project.tasks.map((task, taskIndex) => {
-          return `<li><strong>${task.title}</strong><button class="btn btn-delete" data-project="${projectIndex}" data-id="${taskIndex}">Delete</button> (<small>${task.dueDate}</small>)</li>`;
+          return `<li><strong>${task.title}</strong><button class="btn btn-delete" data-project="${projectIndex}" data-id="${taskIndex}">Delete</button> <button class="btn btn-edit" data-project="${projectIndex}" data-id="${taskIndex}">Edit</button>(<small>${task.dueDate}</small>)</li>`;
         })}`)
       : (projectDisplay += "<li><strong>No tasks to display.</strong></li>");
 
@@ -159,6 +159,7 @@ function generateDropdown(options) {
 
 function addTaskEventListeners() {
   let deleteTaskButtons = [...document.querySelectorAll(`.btn-delete`)];
+  let editTaskButtons = [...document.querySelectorAll(".btn-edit")];
 
   deleteTaskButtons.forEach((button, index) => {
     button.addEventListener("click", function (e) {
@@ -167,6 +168,43 @@ function addTaskEventListeners() {
       projects[projectIndex].removeTask(taskIndex);
       displayAllTasks();
       displayProjects();
+    });
+  });
+
+  editTaskButtons.forEach((button, index) => {
+    button.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      document.querySelector(".btn-add-task").innerText = "Edit Task";
+      let projectIndex = e.target.getAttribute("data-project");
+      let taskIndex = e.target.getAttribute("data-id");
+
+      console.log(
+        "TO FILL WITH: " + projects[projectIndex].tasks[taskIndex].title
+      );
+
+      document.querySelector(
+        "#task-input-form input[name=title]"
+      ).value = projects[projectIndex].tasks[taskIndex].title.toString();
+      document.querySelector(
+        "#task-input-form select[name=projectId]"
+      ).selectedIndex = projectIndex;
+      document.querySelector(
+        "#task-input-form input[name=description]"
+      ).value = projects[projectIndex].tasks[taskIndex].description.toString();
+
+      document.querySelector(
+        "#task-input-form input[name=dueDate]"
+      ).value = projects[projectIndex].tasks[taskIndex].dueDate.toString();
+      let checklist = (document.querySelector(
+        "#task-input-form input[name=checklist]"
+      ).value = projects[projectIndex].tasks[taskIndex].checklist.toString());
+      let notes = (document.querySelector(
+        "#task-input-form input[name=notes]"
+      ).value = projects[projectIndex].tasks[taskIndex].notes.toString());
+      let priority = (document.querySelector(
+        "#task-input-form input[name=priority]"
+      ).value = projects[projectIndex].tasks[taskIndex].priority.toString());
     });
   });
 }
