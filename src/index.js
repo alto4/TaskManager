@@ -38,8 +38,8 @@ function displayProjects() {
 
   projects.forEach((project, projectIndex) => {
     let projectDisplay = `
-    <div className="project-card">
-      <h3>Project #${projectIndex + 1}: ${
+    <div class="project-card">
+      <h3>Project #${projectIndex + 1}: <br/>${
       project.title
     }</h3><button class="btn btn-delete-project" data-project-id="${projectIndex}">Delete</button>
       <p>${project.description}</p>
