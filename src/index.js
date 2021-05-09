@@ -39,10 +39,7 @@ function displayProjects() {
   projects.forEach((project, projectIndex) => {
     let projectDisplay = `
     <div class="project-card">
-      <h3>Project #${projectIndex + 1}: <br/>${
-      project.title
-    }</h3><button class="btn btn-delete-project" data-project-id="${projectIndex}">Delete Project</button>
-      <h5>Task List</h5>
+      <h3>${project.title}<button class="btn btn-delete-project" data-project-id="${projectIndex}"><i class="fa fa-trash"></i></button></h3>
       <ul>`;
 
     project.tasks.length > 0
@@ -50,7 +47,7 @@ function displayProjects() {
           .map((task, taskIndex) => {
             console.log("TASK INDEX ->" + taskIndex);
             console.log("PROJECT INDEX" + projectIndex);
-            return `<li>${task.title}(<small>${task.dueDate}</small>)<button class="btn btn-delete" data-project="${projectIndex}" data-id="${taskIndex}">SSSSSSSSs<i class="fa fa-trash"></i></button> <button class="btn btn-edit" data-project="${projectIndex}" data-id="${taskIndex}">XXXX<i class="fa fa-edit"></i></button></li>`;
+            return `<li><div><button class="btn-complete">O</button>${task.title}(<small>${task.dueDate}</small>)</div><div class="card-buttons"><button class="btn btn-delete" data-project="${projectIndex}" data-id="${taskIndex}"><i class="fa fa-trash"></i></button> <button class="btn btn-edit" data-project="${projectIndex}" data-id="${taskIndex}"><i class="fa fa-edit"></i></button></div></li>`;
           })
           .join("")}`)
       : (projectDisplay += "<li><strong>No tasks to display.</strong></li>");
@@ -168,7 +165,14 @@ function generateDropdown(options) {
 function addTaskEventListeners() {
   let deleteTaskButtons = [...document.querySelectorAll(`.btn-delete`)];
   let editTaskButtons = [...document.querySelectorAll(".btn-edit")];
+  let completeButtons = [...document.querySelectorAll(".btn-complete")];
 
+  completeButtons.forEach((button) => {
+    button.addEventListener("click", function (e) {
+      e.preventDefault();
+      alert("COMPLETE");
+    });
+  });
   deleteTaskButtons.forEach((button, index) => {
     button.addEventListener("click", function (e) {
       let projectIndex = e.target.getAttribute("data-project");
@@ -273,12 +277,18 @@ document.querySelector(".add-tasks").addEventListener("click", () => {
   document.querySelector("#task-input-form").style.display = "block";
   document
     .querySelector("#task-input-form")
-    .setAttribute("style", "position: absolute; top: 120px; left: 100px;  ");
+    .setAttribute(
+      "style",
+      "position: absolute; top: 120px; left: 100px; width: 350px;  "
+    );
 });
 
 document.querySelector(".add-projects").addEventListener("click", () => {
   document.querySelector("#project-input-form").style.display = "block";
   document
     .querySelector("#project-input-form")
-    .setAttribute("style", "position: absolute; top: 120px; left: 100px;  ");
+    .setAttribute(
+      "style",
+      "position: absolute; top: 120px; left: 100px; width: 350px;  "
+    );
 });

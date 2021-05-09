@@ -40,9 +40,16 @@ h1 {
 
 .add-tasks,
 .add-projects {
-  padding: 10px 50px;
-  font-size: 1rem;
-  margin-bottom: 10px;
+  width: 90%;
+  padding: 15px 30px;
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  background: #3068DF;
+  color: #fff;
+}
+
+button:hover {
+  cursor: pointer;
 }
 /* Projcect Card Styles */
 .project-card {
@@ -61,14 +68,41 @@ button {
   margin: 10px auto;
 }
 
-
-
-
 .btn-delete,
 .btn-edit {
-  background: red;
+  background: transparent;
   padding: 7px;
   margin-left: .2rem;;
+  color: #fff;
+}
+
+.btn-complete {
+  background-color: transparent;
+  color: #1ec1c3;
+  font-size: 1.2rem;
+  margin-left: -2rem;
+}
+
+.btn-edit { 
+  background-color: #3068DF;
+}
+
+.btn-delete,
+.btn-delete-project {
+  background-color: red;
+}
+
+.btn-delete-project {
+  padding: 10px;
+}
+
+.btn-add-task,
+.btn-add-project {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border-radius: 10000000px;
+  background-color: #3068DF;
   color: #fff;
 }
 
@@ -83,7 +117,6 @@ button {
 ul li {
   list-style-type:circle; 
   font-size: 14px;
-  display: flex;
   justify-content: space-between;
 }
 
@@ -119,4 +152,23 @@ input {
   border-radius: 100000px;
   width: 100%;
   margin-top: 10px;
+}
+
+/* Project card styles */
+.project-card h3 {
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.project-card h3 i {
+  font-size: 13px;
+}
+
+
+.project-card ul li {
+  display: flex;
+  padding: 8px;
+  border-top: 1px solid #888;
 }
