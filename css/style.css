@@ -22,9 +22,15 @@ body {
 /* Projects Styles */
 .container {
   display: grid;
-  grid-template-columns: 1.3fr 3fr;
-  max-width: 1300px;
+  grid-template-columns: 1fr 3fr;
+  max-width: 1200px;
   margin: auto;;
+}
+
+h1 {
+  grid-column: span 3;
+  font-size: 2.7rem;
+  margin: 50px 0; 
 }
 
 #projects {
@@ -32,10 +38,55 @@ body {
   grid-template-columns: repeat(3, 1fr);
 }
 
+.add-tasks,
+.add-projects {
+  padding: 10px 50px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
 /* Projcect Card Styles */
 .project-card {
   height: 500px;
 }
+
+button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.btn-delete-project {
+  background: red;
+  color: #fff;
+  margin: 10px auto;
+}
+
+
+
+
+.btn-delete,
+.btn-edit {
+  background: red;
+  padding: 7px;
+  margin-left: .2rem;;
+  color: #fff;
+}
+
+.project-card small {
+  font-size: 9px;
+}
+
+.project-card i {
+  font-size: 10px;
+}
+
+ul li {
+  list-style-type:circle; 
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+
 /* Form Styles */
 .project-card,
 #project-input-form,
@@ -43,7 +94,7 @@ body {
   background-color: #212127;
   padding: 40px;
   margin: 15px;
-  border-radius: 15px;;
+  border-radius: 10px;;
 }
 
 h3 {
@@ -69,6 +120,3 @@ input {
   width: 100%;
   margin-top: 10px;
 }
-
-
-

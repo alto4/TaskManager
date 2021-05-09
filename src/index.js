@@ -29,7 +29,7 @@ let task1 = new Task(
 );
 
 projects.push(testProject);
-testProject.addTask(task1);
+// testProject.addTask(task1);
 task1.toggleComplete();
 
 // displayProjects
@@ -41,15 +41,16 @@ function displayProjects() {
     <div class="project-card">
       <h3>Project #${projectIndex + 1}: <br/>${
       project.title
-    }</h3><button class="btn btn-delete-project" data-project-id="${projectIndex}">Delete</button>
-      <p>${project.description}</p>
-      <strong>Task List</strong>
+    }</h3><button class="btn btn-delete-project" data-project-id="${projectIndex}">Delete Project</button>
+      <h5>Task List</h5>
       <ul>`;
 
     project.tasks.length > 0
       ? (projectDisplay += `${project.tasks
           .map((task, taskIndex) => {
-            return `<li><strong>${task.title}</strong><button class="btn btn-delete" data-project="${projectIndex}" data-id="${taskIndex}">Delete</button> <button class="btn btn-edit" data-project="${projectIndex}" data-id="${taskIndex}">Edit</button>(<small>${task.dueDate}</small>)</li>`;
+            console.log("TASK INDEX ->" + taskIndex);
+            console.log("PROJECT INDEX" + projectIndex);
+            return `<li>${task.title}(<small>${task.dueDate}</small>)<button class="btn btn-delete" data-project="${projectIndex}" data-id="${taskIndex}">SSSSSSSSs<i class="fa fa-trash"></i></button> <button class="btn btn-edit" data-project="${projectIndex}" data-id="${taskIndex}">XXXX<i class="fa fa-edit"></i></button></li>`;
           })
           .join("")}`)
       : (projectDisplay += "<li><strong>No tasks to display.</strong></li>");
@@ -61,8 +62,8 @@ function displayProjects() {
     projectsContainer.innerHTML += projectDisplay;
   });
 
-  addTaskEventListeners();
   addProjectEventListeners();
+  addTaskEventListeners();
   clearForms();
 }
 
@@ -94,14 +95,16 @@ addProjectButton.addEventListener("click", function (e) {
   let newProject = new Project(title, description, dueDate, []);
   projects.push(newProject);
 
-  // addProjectEventListeners();
+  addProjectEventListeners();
   displayProjects();
+  document.querySelector("#project-input-form").style.display = "none";
   generateDropdown(projects);
 });
 
 //addTask
 addTaskButton.addEventListener("click", function addTaskEvents(e) {
   e.preventDefault();
+  document.querySelector("#task-input-form").style.display = "none";
   addNewTask();
 });
 
@@ -137,9 +140,9 @@ function addNewTask() {
   // Add task to corresponding list
   projects[projectId].addTask(newTask);
 
+  console.log("PROJECTS ARRAY UPDATED: " + projects);
   displayAllTasks();
   displayProjects();
-  addTaskEventListeners();
 }
 
 generateDropdown(projects);
@@ -170,6 +173,13 @@ function addTaskEventListeners() {
     button.addEventListener("click", function (e) {
       let projectIndex = e.target.getAttribute("data-project");
       let taskIndex = e.target.getAttribute("data-id");
+      console.log(
+        "PROJECT INDEX: " +
+          projectIndex +
+          "TASK INDEX: " +
+          taskIndex +
+          projects.toString()
+      );
       projects[projectIndex].removeTask(taskIndex);
       displayAllTasks();
       displayProjects();
@@ -261,8 +271,14 @@ document.querySelector("#project-input-form").style.display = "none";
 
 document.querySelector(".add-tasks").addEventListener("click", () => {
   document.querySelector("#task-input-form").style.display = "block";
+  document
+    .querySelector("#task-input-form")
+    .setAttribute("style", "position: absolute; top: 120px; left: 100px;  ");
 });
 
 document.querySelector(".add-projects").addEventListener("click", () => {
   document.querySelector("#project-input-form").style.display = "block";
+  document
+    .querySelector("#project-input-form")
+    .setAttribute("style", "position: absolute; top: 120px; left: 100px;  ");
 });
