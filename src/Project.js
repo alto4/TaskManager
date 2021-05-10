@@ -1,5 +1,6 @@
-// Project class
+// Project class - represents an individual Project instance
 class Project {
+  // Creates a new Project instance
   constructor(title, description, dueDate, tasks) {
     this.title = title;
     this.description = description;
@@ -7,14 +8,14 @@ class Project {
     this.tasks = tasks;
   }
 
+  // Add a new task to project
   addTask(task) {
     this.tasks.push(task);
   }
 
+  // Remove a task from the project
   removeTask(index) {
-    console.log("BEFORE SPLICE: " + this.tasks);
     this.tasks.splice(index, 1);
-    console.log("AFTER SPLICE: " + this.tasks);
   }
 }
 
