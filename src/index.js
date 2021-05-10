@@ -3,6 +3,10 @@ import { Task } from "./Task";
 import { Project } from "./Project";
 
 let projects = [];
+if (localStorage.getItem("projects")) {
+  projects = JSON.parse(localStorage.getItem("projects"));
+}
+
 let allTasks = [];
 
 let projectsContainer = document.querySelector("#projects");
@@ -10,56 +14,10 @@ let tasksContainer = document.querySelector("#tasks");
 let addProjectButton = document.querySelector("#project-input-form button");
 let addTaskButton = document.querySelector("#task-input-form button");
 
-// DEBUG CODE
-// Sample project creation
-let testProject = new Project(
-  "Todo List",
-  "A dynamic project management application.",
-  "May 10, 2021",
-  [],
-  false
-);
-
-// Sample task creation
-let task1 = new Task(
-  "Project setup",
-  "Webpack setup and create Project and Task classes",
-  "May 6, 2021",
-  "High",
-  "Use webpack",
-  []
-);
-
-let task2 = new Task(
-  "Project 2",
-  "Webpack setup and create Project and Task classes",
-  "May 6, 2021",
-  "High",
-  "Use webpack",
-  [],
-  true
-);
-
-let task3 = new Task(
-  "Project 3",
-  "Webpack setup and create Project and Task classes",
-  "May 6, 2021",
-  "High",
-  "Use webpack",
-  [],
-  true
-);
-projects.push(testProject);
-testProject.addTask(task1);
-testProject.addTask(task2);
-task2.toggleComplete();
-task2.toggleComplete();
-testProject.addTask(task3);
-//task1.toggleComplete();
-// END OF DEBUG CODE
-
 // displayProjects - renders all projects and associated list of tasks into DOM as project cards
 function displayProjects() {
+  localStorage.setItem("projects", JSON.stringify(projects));
+
   // Clear projects container and regenerate each project card
   projectsContainer.innerHTML = "";
 
