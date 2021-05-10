@@ -385,10 +385,20 @@ document.addEventListener("keydown", (e) => {
 });
 
 function abandonFormEntry() {
-  alert("EXIT BUTTON");
   clearForms();
   document.querySelector("#project-input-form").style.display = "none";
   document.querySelector("#task-input-form").style.display = "none";
+
+  let addButton = document.querySelector(".btn-add-task");
+  // addButton.style.display = "none";
+  // addButton.disabled = true;
+  let editButton = document.createElement("button");
+  editButton.classList += "btn btn-edit-task";
+  editButton.innerText = "Edit Task";
+
+  document
+    .querySelector("#task-input-form")
+    .replaceChild(addButton, editButton);
 }
 
 // Initial display of projects
