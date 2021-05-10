@@ -289,8 +289,28 @@ function addTaskEventListeners() {
         projects[projectIndex].tasks[taskIndex].title = document.querySelector(
           "#task-input-form input[name=title]"
         ).value;
-        projects[projectIndex].tasks[taskIndex].title = document.querySelector(
-          "#task-input-form input[name=title]"
+        projects[projectIndex].tasks[
+          taskIndex
+        ].description = document.querySelector(
+          "#task-input-form input[name=description]"
+        ).value;
+        projects[projectIndex].tasks[
+          taskIndex
+        ].dueDate = document.querySelector(
+          "#task-input-form input[name=dueDate]"
+        ).value;
+        projects[projectIndex].tasks[
+          taskIndex
+        ].checklist = document.querySelector(
+          "#task-input-form input[name=checklist]"
+        ).value;
+        projects[projectIndex].tasks[taskIndex].notes = document.querySelector(
+          "#task-input-form input[name=notes]"
+        ).value;
+        projects[projectIndex].tasks[
+          taskIndex
+        ].priority = document.querySelector(
+          "#task-input-form input[name=priority]"
         ).value;
 
         // Remove edit button event before rerendering tasks
