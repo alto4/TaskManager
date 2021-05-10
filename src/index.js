@@ -4,7 +4,18 @@ import { Project } from "./Project";
 
 let projects = [];
 if (localStorage.getItem("projects")) {
-  projects = JSON.parse(localStorage.getItem("projects"));
+  let tempProjects = JSON.parse(localStorage.getItem("projects"));
+  console.log(projects);
+  tempProjects.forEach((project) => {
+    let storedProject = new Project(
+      project.title,
+      project.description,
+      project.dueDate,
+      project.tasks
+    );
+
+    projects.push(storedProject);
+  });
 }
 
 let allTasks = [];
@@ -21,31 +32,33 @@ function displayProjects() {
   // Clear projects container and regenerate each project card
   projectsContainer.innerHTML = "";
 
-  projects.forEach((project, projectIndex) => {
-    let projectDisplay = `
+  if (projects.length > 0) {
+    projects.forEach((project, projectIndex) => {
+      let projectDisplay = `
     <div class="project-card">
       <h3>${project.title}<button class="btn btn-delete-project" data-project-id="${projectIndex}"><i class="fa fa-trash"></i></button></h3>
       <ul>`;
 
-    // If no tasks have been added, inform user, otherwise map over all tasks and render into DOM
-    project.tasks.length > 0
-      ? (projectDisplay += `${project.tasks
-          .map((task, taskIndex) => {
-            return `<li><div><button class="btn-complete"  data-project="${projectIndex}" data-id="${taskIndex}">O</button>${
-              task.complete ? "<del>" : ""
-            }${task.title}${task.complete ? "</del>" : ""}(<small>${
-              task.dueDate
-            }</small>)</div><div class="card-buttons"><button class="btn btn-delete" data-project="${projectIndex}" data-id="${taskIndex}"><i class="fa fa-trash"></i></button> <button class="btn btn-edit" data-project="${projectIndex}" data-id="${taskIndex}"><i class="fa fa-edit"></i></button></div></li>`;
-          })
-          .join("")}`)
-      : (projectDisplay += "<li><strong>No tasks to display.</strong></li>");
+      // If no tasks have been added, inform user, otherwise map over all tasks and render into DOM
+      project.tasks.length > 0
+        ? (projectDisplay += `${project.tasks
+            .map((task, taskIndex) => {
+              return `<li><div><button class="btn-complete"  data-project="${projectIndex}" data-id="${taskIndex}">O</button>${
+                task.complete ? "<del>" : ""
+              }${task.title}${task.complete ? "</del>" : ""}(<small>${
+                task.dueDate
+              }</small>)</div><div class="card-buttons"><button class="btn btn-delete" data-project="${projectIndex}" data-id="${taskIndex}"><i class="fa fa-trash"></i></button> <button class="btn btn-edit" data-project="${projectIndex}" data-id="${taskIndex}"><i class="fa fa-edit"></i></button></div></li>`;
+            })
+            .join("")}`)
+        : (projectDisplay += "<li><strong>No tasks to display.</strong></li>");
 
-    projectDisplay += `</ul>
+      projectDisplay += `</ul>
     </div>
     `;
 
-    projectsContainer.innerHTML += projectDisplay;
-  });
+      projectsContainer.innerHTML += projectDisplay;
+    });
+  }
 
   // Add all event listeners to DOM element buttons and clear form back to default state
   addProjectEventListeners();
@@ -149,15 +162,17 @@ function generateDropdown(options) {
   // Clear current options
   projectsDropdown.innerHTML = "";
 
-  // Generate dropdown menu based on all current project titles
-  options.forEach((option, index) => {
-    let dropdownOption = document.createElement("option");
-    dropdownOption.setAttribute("data-id", index);
-    dropdownOption.value = index;
-    dropdownOption.innerText = option.title;
-    projectsDropdown.appendChild(dropdownOption);
-    index++;
-  });
+  if (options.length > 0) {
+    // Generate dropdown menu based on all current project titles
+    options.forEach((option, index) => {
+      let dropdownOption = document.createElement("option");
+      dropdownOption.setAttribute("data-id", index);
+      dropdownOption.value = index;
+      dropdownOption.innerText = option.title;
+      projectsDropdown.appendChild(dropdownOption);
+      index++;
+    });
+  }
 }
 
 // addTaskEventListeners - adds event listeners for complete/incomplete, edit, and delete buttons for each individual task
@@ -166,6 +181,9 @@ function addTaskEventListeners() {
   let editTaskButtons = [...document.querySelectorAll(".btn-edit")];
   let completeButtons = [...document.querySelectorAll(".btn-complete")];
 
+  console.log(deleteTaskButtons);
+  console.log(editTaskButtons);
+  console.log(completeButtons);
   // Complete/Incomplete button events
   completeButtons.forEach((button) => {
     button.addEventListener("click", function (e) {
@@ -189,6 +207,12 @@ function addTaskEventListeners() {
       let projectIndex = e.target.getAttribute("data-project");
       let taskIndex = e.target.getAttribute("data-id");
 
+      console.log(
+        "TRYING TO DELETE PROJECT INDEX " +
+          projectIndex +
+          "TASK INDEX" +
+          taskIndex
+      );
       // Remove task targetted from project task list
       projects[projectIndex].removeTask(taskIndex);
 
@@ -347,6 +371,25 @@ document.querySelector(".add-projects").addEventListener("click", () => {
       "position: absolute; top: 120px; left: 100px; width: 350px;  "
     );
 });
+
+document.querySelectorAll(".btn-exit").forEach((button) => {
+  button.addEventListener("click", (e) => {
+    abandonFormEntry();
+  });
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    abandonFormEntry();
+  }
+});
+
+function abandonFormEntry() {
+  alert("EXIT BUTTON");
+  clearForms();
+  document.querySelector("#project-input-form").style.display = "none";
+  document.querySelector("#task-input-form").style.display = "none";
+}
 
 // Initial display of projects
 displayProjects();
