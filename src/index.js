@@ -87,13 +87,6 @@ function displayProjects() {
     `;
 
     projectsContainer.innerHTML += projectDisplay;
-
-    // Loop through and strike out completed tasks
-    // let projectListItems = [
-    //   ...document.querySelectorAll(".project-card ul li div"),
-    // ];
-
-    // listItem.style.setProperty("text-decoration", "line-through");
   });
 
   // Add all event listeners to DOM element buttons and clear form back to default state
@@ -254,8 +247,14 @@ function addTaskEventListeners() {
 
       // TODO: NEED TO REMOVE ADD EVENT IN CASE OF EDIT WHEN RECYLING BUTTON
       // Update add button to edit
-      let editButton = document.querySelector(".btn-add-task");
+
+      let addButton = document.querySelector(".btn-add-task");
+      addButton.style.display = "none";
+      let editButton = document.createElement("button");
+      editButton.classList += "btn btn-edit-task";
       editButton.innerText = "Edit Task";
+
+      document.querySelector("#task-input-form").appendChild(editButton);
 
       let projectIndex = e.target.getAttribute("data-project");
       let taskIndex = e.target.getAttribute("data-id");
@@ -296,7 +295,9 @@ function addTaskEventListeners() {
 
         // Remove edit button event before rerendering tasks
         editButton.removeEventListener("click", addEditEvents);
-        editButton.innerText = "Add Task";
+        // editButton.innerText = "Add Task";
+        editButton.style.display = "none";
+        addButton.style.display = "block";
         displayProjects();
       });
     });
