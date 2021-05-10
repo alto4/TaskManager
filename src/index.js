@@ -249,12 +249,15 @@ function addTaskEventListeners() {
       // Update add button to edit
 
       let addButton = document.querySelector(".btn-add-task");
-      addButton.style.display = "none";
+      // addButton.style.display = "none";
+      // addButton.disabled = true;
       let editButton = document.createElement("button");
       editButton.classList += "btn btn-edit-task";
       editButton.innerText = "Edit Task";
 
-      document.querySelector("#task-input-form").appendChild(editButton);
+      document
+        .querySelector("#task-input-form")
+        .replaceChild(editButton, addButton);
 
       let projectIndex = e.target.getAttribute("data-project");
       let taskIndex = e.target.getAttribute("data-id");
@@ -314,10 +317,13 @@ function addTaskEventListeners() {
         ).value;
 
         // Remove edit button event before rerendering tasks
-        editButton.removeEventListener("click", addEditEvents);
+        //editButton.removeEventListener("click", addEditEvents);
         // editButton.innerText = "Add Task";
-        editButton.style.display = "none";
-        addButton.style.display = "block";
+        document
+          .querySelector("#task-input-form")
+          .replaceChild(addButton, editButton);
+        // addButton.style.display = "block";
+        // addButton.disabled = false;
         displayProjects();
       });
     });
