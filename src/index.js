@@ -6,12 +6,27 @@ let projects = [];
 if (localStorage.getItem("projects")) {
   let tempProjects = JSON.parse(localStorage.getItem("projects"));
   console.log(projects);
+
   tempProjects.forEach((project) => {
+    let tempTasks = [];
+    project.tasks.forEach((task) => {
+      let tempTask = new Task(
+        task.title,
+        task.description,
+        task.dueDate,
+        task.priority,
+        task.notes,
+        task.checklist,
+        task.complete
+      );
+
+      tempTasks.push(tempTask);
+    });
     let storedProject = new Project(
       project.title,
       project.description,
       project.dueDate,
-      project.tasks
+      tempTasks
     );
 
     projects.push(storedProject);
@@ -84,16 +99,18 @@ addProjectButton.addEventListener("click", function (e) {
   e.preventDefault();
 
   // Get form values
-  let title = document.querySelector("#project-input-form input[name=title]")
-    .value;
+  let title = document.querySelector(
+    "#project-input-form input[name=title]"
+  ).value;
   let description = document.querySelector(
     "#project-input-form input[name=description]"
   ).value;
   let dueDate = document.querySelector(
     "#project-input-form input[name=dueDate]"
   ).value;
-  let tasks = document.querySelector("#project-input-form input[name=tasks]")
-    .value;
+  let tasks = document.querySelector(
+    "#project-input-form input[name=tasks]"
+  ).value;
 
   // Create new Project instance and push to overall projects array
   let newProject = new Project(title, description, dueDate, []);
@@ -118,23 +135,27 @@ addTaskButton.addEventListener("click", function addTaskEvents(e) {
 
 // addNewTask - Create new task - adds task to display using information provided in form
 function addNewTask() {
-  let title = document.querySelector("#task-input-form input[name=title]")
-    .value;
+  let title = document.querySelector(
+    "#task-input-form input[name=title]"
+  ).value;
   let projectId = document.querySelector(
     "#task-input-form select[name=projectId]"
   ).value;
   let description = document.querySelector(
     "#task-input-form input[name=description]"
   ).value;
-  let dueDate = document.querySelector("#task-input-form input[name=dueDate]")
-    .value;
+  let dueDate = document.querySelector(
+    "#task-input-form input[name=dueDate]"
+  ).value;
   let checklist = document.querySelector(
     "#task-input-form input[name=checklist]"
   ).value;
-  let notes = document.querySelector("#task-input-form input[name=notes]")
-    .value;
-  let priority = document.querySelector("#task-input-form input[name=priority]")
-    .value;
+  let notes = document.querySelector(
+    "#task-input-form input[name=notes]"
+  ).value;
+  let priority = document.querySelector(
+    "#task-input-form input[name=priority]"
+  ).value;
 
   // Generate new task based on input provided
   let newTask = new Task(
@@ -245,19 +266,16 @@ function addTaskEventListeners() {
       let taskIndex = e.target.getAttribute("data-id");
 
       // Populate form values with task details stored in projects array
-      document.querySelector(
-        "#task-input-form input[name=title]"
-      ).value = projects[projectIndex].tasks[taskIndex].title.toString();
+      document.querySelector("#task-input-form input[name=title]").value =
+        projects[projectIndex].tasks[taskIndex].title.toString();
       document.querySelector(
         "#task-input-form select[name=projectId]"
       ).selectedIndex = projectIndex;
-      document.querySelector(
-        "#task-input-form input[name=description]"
-      ).value = projects[projectIndex].tasks[taskIndex].description.toString();
+      document.querySelector("#task-input-form input[name=description]").value =
+        projects[projectIndex].tasks[taskIndex].description.toString();
 
-      document.querySelector(
-        "#task-input-form input[name=dueDate]"
-      ).value = projects[projectIndex].tasks[taskIndex].dueDate.toString();
+      document.querySelector("#task-input-form input[name=dueDate]").value =
+        projects[projectIndex].tasks[taskIndex].dueDate.toString();
       let checklist = (document.querySelector(
         "#task-input-form input[name=checklist]"
       ).value = projects[projectIndex].tasks[taskIndex].checklist.toString());
@@ -274,29 +292,21 @@ function addTaskEventListeners() {
         projects[projectIndex].tasks[taskIndex].title = document.querySelector(
           "#task-input-form input[name=title]"
         ).value;
-        projects[projectIndex].tasks[
-          taskIndex
-        ].description = document.querySelector(
-          "#task-input-form input[name=description]"
-        ).value;
-        projects[projectIndex].tasks[
-          taskIndex
-        ].dueDate = document.querySelector(
-          "#task-input-form input[name=dueDate]"
-        ).value;
-        projects[projectIndex].tasks[
-          taskIndex
-        ].checklist = document.querySelector(
-          "#task-input-form input[name=checklist]"
-        ).value;
+        projects[projectIndex].tasks[taskIndex].description =
+          document.querySelector(
+            "#task-input-form input[name=description]"
+          ).value;
+        projects[projectIndex].tasks[taskIndex].dueDate =
+          document.querySelector("#task-input-form input[name=dueDate]").value;
+        projects[projectIndex].tasks[taskIndex].checklist =
+          document.querySelector(
+            "#task-input-form input[name=checklist]"
+          ).value;
         projects[projectIndex].tasks[taskIndex].notes = document.querySelector(
           "#task-input-form input[name=notes]"
         ).value;
-        projects[projectIndex].tasks[
-          taskIndex
-        ].priority = document.querySelector(
-          "#task-input-form input[name=priority]"
-        ).value;
+        projects[projectIndex].tasks[taskIndex].priority =
+          document.querySelector("#task-input-form input[name=priority]").value;
 
         // Remove edit button event before rerendering tasks
         //editButton.removeEventListener("click", addEditEvents);
