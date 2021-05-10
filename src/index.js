@@ -16,7 +16,8 @@ let testProject = new Project(
   "Todo List",
   "A dynamic project management application.",
   "May 10, 2021",
-  []
+  [],
+  false
 );
 
 // Sample task creation
@@ -29,9 +30,32 @@ let task1 = new Task(
   []
 );
 
+let task2 = new Task(
+  "Project 2",
+  "Webpack setup and create Project and Task classes",
+  "May 6, 2021",
+  "High",
+  "Use webpack",
+  [],
+  true
+);
+
+let task3 = new Task(
+  "Project 3",
+  "Webpack setup and create Project and Task classes",
+  "May 6, 2021",
+  "High",
+  "Use webpack",
+  [],
+  true
+);
 projects.push(testProject);
-// testProject.addTask(task1);
-task1.toggleComplete();
+testProject.addTask(task1);
+testProject.addTask(task2);
+task2.toggleComplete();
+task2.toggleComplete();
+testProject.addTask(task3);
+//task1.toggleComplete();
 // END OF DEBUG CODE
 
 // displayProjects - renders all projects and associated list of tasks into DOM as project cards
@@ -49,7 +73,11 @@ function displayProjects() {
     project.tasks.length > 0
       ? (projectDisplay += `${project.tasks
           .map((task, taskIndex) => {
-            return `<li><div><button class="btn-complete">O</button>${task.title}(<small>${task.dueDate}</small>)</div><div class="card-buttons"><button class="btn btn-delete" data-project="${projectIndex}" data-id="${taskIndex}"><i class="fa fa-trash"></i></button> <button class="btn btn-edit" data-project="${projectIndex}" data-id="${taskIndex}"><i class="fa fa-edit"></i></button></div></li>`;
+            return `<li><div><button class="btn-complete"  data-project="${projectIndex}" data-id="${taskIndex}">O</button>${
+              task.complete ? "<del>" : ""
+            }${task.title}${task.complete ? "</del>" : ""}(<small>${
+              task.dueDate
+            }</small>)</div><div class="card-buttons"><button class="btn btn-delete" data-project="${projectIndex}" data-id="${taskIndex}"><i class="fa fa-trash"></i></button> <button class="btn btn-edit" data-project="${projectIndex}" data-id="${taskIndex}"><i class="fa fa-edit"></i></button></div></li>`;
           })
           .join("")}`)
       : (projectDisplay += "<li><strong>No tasks to display.</strong></li>");
@@ -59,6 +87,13 @@ function displayProjects() {
     `;
 
     projectsContainer.innerHTML += projectDisplay;
+
+    // Loop through and strike out completed tasks
+    // let projectListItems = [
+    //   ...document.querySelectorAll(".project-card ul li div"),
+    // ];
+
+    // listItem.style.setProperty("text-decoration", "line-through");
   });
 
   // Add all event listeners to DOM element buttons and clear form back to default state
@@ -180,10 +215,20 @@ function addTaskEventListeners() {
   let editTaskButtons = [...document.querySelectorAll(".btn-edit")];
   let completeButtons = [...document.querySelectorAll(".btn-complete")];
 
+  // Complete/Incomplete button events
   completeButtons.forEach((button) => {
     button.addEventListener("click", function (e) {
       e.preventDefault();
-      alert("COMPLETE");
+
+      let projectIndex = e.target.getAttribute("data-project");
+      let taskIndex = e.target.getAttribute("data-id");
+
+      // Mark targetted task as complete
+      projects[projectIndex].tasks[taskIndex].toggleComplete();
+
+      // Rerender display to show update
+      displayAllTasks();
+      displayProjects();
     });
   });
 
