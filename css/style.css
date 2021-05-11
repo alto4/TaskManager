@@ -67,9 +67,10 @@ button {
   margin: 10px auto;
 }
 
+.btn-add-project-task,
 .btn-delete,
 .btn-edit {
-  background: transparent;
+  background: black;
   padding: 7px;
   margin-left: .2rem;;
   color: #fff;
@@ -91,11 +92,14 @@ button {
   background-color: #000;
 }
 
+.btn-add-project-task,
 .btn-delete-project {
   padding: 10px;
+  margin-left: 5px;
 }
 
 .btn-add-task,
+.btn-edit-task,
 .btn-add-project {
   display: block;
   width: 100%;
@@ -103,6 +107,19 @@ button {
   border-radius: 10000000px;
   background-color: #000;
   color: #fff;
+}
+
+.btn-exit {
+  background-color: #222;
+  padding: 8px;
+  border-radius: 99%;
+  font-size: 10px;
+  border: 1px solid white;
+}
+
+.btn-exit:hover {
+  cursor: pointer;
+  background-color: #111;
 }
 
 .project-card small {
@@ -143,6 +160,7 @@ del {
   text-decoration-color: #000;
   text-decoration-thickness: 3px;
 }
+
 /* Form Styles */
 .project-card,
 #project-input-form,
@@ -157,6 +175,7 @@ del {
 #task-input-form {
   padding: 40px;
 }
+
 h3 {
   color: #3068df;
   font-size: 1.8rem;
@@ -180,4 +199,5 @@ input {
   width: 100%;
   margin-top: 10px;
 }
+
 
