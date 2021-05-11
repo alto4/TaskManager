@@ -248,12 +248,11 @@ function addTaskEventListeners() {
     button.addEventListener("click", function (e) {
       e.preventDefault();
 
-      // TODO: NEED TO REMOVE ADD EVENT IN CASE OF EDIT WHEN RECYLING BUTTON
-      // Update add button to edit
+      // Display the task input form
+      //      displayTaskForm();
 
+      // Update add button to edit
       let addButton = document.querySelector(".btn-add-task");
-      // addButton.style.display = "none";
-      // addButton.disabled = true;
       let editButton = document.createElement("button");
       editButton.classList += "btn btn-edit-task";
       editButton.innerText = "Edit Task";
@@ -285,6 +284,8 @@ function addTaskEventListeners() {
       let priority = (document.querySelector(
         "#task-input-form input[name=priority]"
       ).value = projects[projectIndex].tasks[taskIndex].priority.toString());
+
+      displayTaskForm();
 
       // Upon edit button click, update the corresponding task to reflect updated data
       editButton.addEventListener("click", function addEditEvents(e) {
@@ -359,10 +360,23 @@ function clearForms() {
 }
 
 // TODO: Break into display/show form functions for easy resuse
-document.querySelector("#task-input-form").style.display = "none";
-document.querySelector("#project-input-form").style.display = "none";
 
-document.querySelector(".add-tasks").addEventListener("click", () => {
+function addFormEventListeners() {
+  document.querySelector("#task-input-form").style.display = "none";
+  document.querySelector("#project-input-form").style.display = "none";
+
+  document
+    .querySelector(".add-tasks")
+    .addEventListener("click", displayTaskForm);
+
+  document
+    .querySelector(".add-projects")
+    .addEventListener("click", displayProjectForm);
+}
+
+addFormEventListeners();
+
+function displayTaskForm() {
   document.querySelector("#task-input-form").style.display = "block";
   document
     .querySelector("#task-input-form")
@@ -370,9 +384,11 @@ document.querySelector(".add-tasks").addEventListener("click", () => {
       "style",
       "position: absolute; top: 120px; left: 0; width: 320px;  "
     );
-});
 
-document.querySelector(".add-projects").addEventListener("click", () => {
+  addFormExitEvents();
+}
+
+function displayProjectForm() {
   document.querySelector("#project-input-form").style.display = "block";
   document
     .querySelector("#project-input-form")
@@ -380,19 +396,23 @@ document.querySelector(".add-projects").addEventListener("click", () => {
       "style",
       "position: absolute; top: 120px; left: 0; width: 320px;  "
     );
-});
 
-document.querySelectorAll(".btn-exit").forEach((button) => {
-  button.addEventListener("click", (e) => {
-    abandonFormEntry();
+  addFormExitEvents();
+}
+
+function addFormExitEvents() {
+  document.querySelectorAll(".btn-exit").forEach((button) => {
+    button.addEventListener("click", (e) => {
+      abandonFormEntry();
+    });
   });
-});
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    abandonFormEntry();
-  }
-});
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      abandonFormEntry();
+    }
+  });
+}
 
 function abandonFormEntry() {
   clearForms();
@@ -400,8 +420,6 @@ function abandonFormEntry() {
   document.querySelector("#task-input-form").style.display = "none";
 
   let addButton = document.querySelector(".btn-add-task");
-  // addButton.style.display = "none";
-  // addButton.disabled = true;
   let editButton = document.createElement("button");
   editButton.classList += "btn btn-edit-task";
   editButton.innerText = "Edit Task";
