@@ -20,20 +20,20 @@ body {
 h1 {
   grid-column: span 3;
   font-size: 2.7rem;
-  margin: 50px 0; 
+  margin: 25px 0 30px; 
 }
 
 /* Projects Styles */
 .container {
   display: grid;
-  grid-template-columns: 1fr 3fr;
-  max-width: 1200px;
+  grid-template-columns: .8fr 3fr;
+  padding: 30px;
   margin: auto;;
 }
 
 #projects {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .add-tasks,
@@ -42,7 +42,7 @@ h1 {
   padding: 15px 30px;
   font-size: 1.3rem;
   margin-bottom: 15px;
-  background: #3068DF;
+  background: #000;
   color: #fff;
 }
 
@@ -62,7 +62,7 @@ button {
 }
 
 .btn-delete-project {
-  background: red;
+  background: #111;
   color: #fff;
   margin: 10px auto;
 }
@@ -83,12 +83,12 @@ button {
 }
 
 .btn-edit { 
-  background-color: #3068DF;
+  background-color: #000;
 }
 
 .btn-delete,
 .btn-delete-project {
-  background-color: red;
+  background-color: #000;
 }
 
 .btn-delete-project {
@@ -101,7 +101,7 @@ button {
   width: 100%;
   padding: 12px;
   border-radius: 10000000px;
-  background-color: #3068DF;
+  background-color: #000;
   color: #fff;
 }
 
@@ -125,7 +125,8 @@ button {
 }
 
 .project-card ul li {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 58px;
   padding: 8px;
   border-top: 1px solid #888;
   list-style-type:circle; 
@@ -133,9 +134,13 @@ button {
   justify-content: space-between;
 }
 
+.project-card ul li small {
+  display: block;
+}
+
 del {
   text-decoration: line-through;
-  text-decoration-color: red;
+  text-decoration-color: #000;
   text-decoration-thickness: 3px;
 }
 /* Form Styles */
@@ -143,11 +148,15 @@ del {
 #project-input-form,
 #task-input-form {
   background-color: #212127;
-  padding: 40px;
+  padding: 20px 5px 20px 30px;
   margin: 15px;
   border-radius: 10px;;
 }
 
+#project-input-form,
+#task-input-form {
+  padding: 40px;
+}
 h3 {
   color: #3068df;
   font-size: 1.8rem;

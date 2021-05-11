@@ -60,9 +60,9 @@ function displayProjects() {
             .map((task, taskIndex) => {
               return `<li><div><button class="btn-complete"  data-project="${projectIndex}" data-id="${taskIndex}">O</button>${
                 task.complete ? "<del>" : ""
-              }${task.title}${task.complete ? "</del>" : ""}(<small>${
+              }${task.title}${task.complete ? "</del>" : ""}<small>(${
                 task.dueDate
-              }</small>)</div><div class="card-buttons"><button class="btn btn-delete" data-project="${projectIndex}" data-id="${taskIndex}"><i class="fa fa-trash"></i></button> <button class="btn btn-edit" data-project="${projectIndex}" data-id="${taskIndex}"><i class="fa fa-edit"></i></button></div></li>`;
+              })</small></div><div class="card-buttons"><button class="btn btn-delete" data-project="${projectIndex}" data-id="${taskIndex}"><i class="fa fa-trash"></i></button> <button class="btn btn-edit" data-project="${projectIndex}" data-id="${taskIndex}"><i class="fa fa-edit"></i></button></div></li>`;
             })
             .join("")}`)
         : (projectDisplay += "<li><strong>No tasks to display.</strong></li>");
@@ -368,7 +368,7 @@ document.querySelector(".add-tasks").addEventListener("click", () => {
     .querySelector("#task-input-form")
     .setAttribute(
       "style",
-      "position: absolute; top: 120px; left: 100px; width: 350px;  "
+      "position: absolute; top: 120px; left: 0; width: 320px;  "
     );
 });
 
@@ -378,7 +378,7 @@ document.querySelector(".add-projects").addEventListener("click", () => {
     .querySelector("#project-input-form")
     .setAttribute(
       "style",
-      "position: absolute; top: 120px; left: 100px; width: 350px;  "
+      "position: absolute; top: 120px; left: 0; width: 320px;  "
     );
 });
 
