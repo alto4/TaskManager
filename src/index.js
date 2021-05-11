@@ -51,7 +51,7 @@ function displayProjects() {
     projects.forEach((project, projectIndex) => {
       let projectDisplay = `
     <div class="project-card">
-      <h3>${project.title}<button class="btn btn-delete-project" data-project-id="${projectIndex}"><i class="fa fa-trash"></i></button></h3>
+      <h3>${project.title}<button class="btn btn-add-project-task" data-project-id="${projectIndex}"><i class="fa fa-plus"></i></button><button class="btn btn-delete-project" data-project-id="${projectIndex}"><i class="fa fa-trash"></i></button></h3>
       <ul>`;
 
       // If no tasks have been added, inform user, otherwise map over all tasks and render into DOM
@@ -202,9 +202,6 @@ function addTaskEventListeners() {
   let editTaskButtons = [...document.querySelectorAll(".btn-edit")];
   let completeButtons = [...document.querySelectorAll(".btn-complete")];
 
-  console.log(deleteTaskButtons);
-  console.log(editTaskButtons);
-  console.log(completeButtons);
   // Complete/Incomplete button events
   completeButtons.forEach((button) => {
     button.addEventListener("click", function (e) {
@@ -228,12 +225,6 @@ function addTaskEventListeners() {
       let projectIndex = e.target.getAttribute("data-project");
       let taskIndex = e.target.getAttribute("data-id");
 
-      console.log(
-        "TRYING TO DELETE PROJECT INDEX " +
-          projectIndex +
-          "TASK INDEX" +
-          taskIndex
-      );
       // Remove task targetted from project task list
       projects[projectIndex].removeTask(taskIndex);
 
@@ -247,9 +238,6 @@ function addTaskEventListeners() {
   editTaskButtons.forEach((button, index) => {
     button.addEventListener("click", function (e) {
       e.preventDefault();
-
-      // Display the task input form
-      //      displayTaskForm();
 
       // Update add button to edit
       let addButton = document.querySelector(".btn-add-task");
@@ -310,13 +298,9 @@ function addTaskEventListeners() {
           document.querySelector("#task-input-form input[name=priority]").value;
 
         // Remove edit button event before rerendering tasks
-        //editButton.removeEventListener("click", addEditEvents);
-        // editButton.innerText = "Add Task";
         document
           .querySelector("#task-input-form")
           .replaceChild(addButton, editButton);
-        // addButton.style.display = "block";
-        // addButton.disabled = false;
         displayProjects();
       });
     });
@@ -342,6 +326,39 @@ function addProjectEventListeners() {
       generateDropdown(projects);
     });
   });
+
+  const addProjectTaskButtons = [
+    ...document.querySelectorAll(".btn-add-project-task"),
+  ];
+
+  addProjectTaskButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      console.log(
+        "test, project index #" + e.target.getAttribute("data-project-id")
+      );
+
+      clearForms();
+      displayTaskForm();
+      let projectIndex = e.target.getAttribute("data-project-id");
+      let taskForm = document.querySelector("#task-input-form select");
+
+      taskForm.selectedIndex = projectIndex;
+    });
+  });
+}
+
+// Swap out potential edit button back to add button
+function resetAddButton() {
+  let editButton = document.querySelector(".btn-edit-task");
+  let addButton = document.createElement("button");
+  addButton.classList += "btn btn-add-task";
+  addButton.innerText = "Add Task";
+
+  if (editButton) {
+    document
+      .querySelector("#task-input-form")
+      .replaceChild(addButton, editButton);
+  }
 }
 
 // clearForms - resets all form controls to default state
@@ -357,6 +374,8 @@ function clearForms() {
   dropdownMenus.forEach((menu) => {
     menu.selectedIndex = 0;
   });
+
+  resetAddButton();
 }
 
 // TODO: Break into display/show form functions for easy resuse
