@@ -1,3 +1,4 @@
 {
-  "workbench.settings.openDefaultSettings": true
+  "workbench.settings.openDefaultSettings": true,
+  "liveServer.settings.port": 5500
 }
